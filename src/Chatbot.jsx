@@ -1,5 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { 
+  Sparkles, Calculator, Workflow, FolderGit2, 
+  Calendar, HelpCircle 
+} from 'lucide-react';
 
 const ThinkingProcess = () => {
   const [step, setStep] = useState(0);
@@ -66,6 +70,15 @@ export default function Chatbot() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
+  const quickPrompts = [
+    { label: 'Startup Packages', icon: Sparkles, prompt: 'What package do you recommend for an early-stage startup?' },
+    { label: 'Cost Estimator', icon: Calculator, prompt: 'How do you calculate project costs and estimates?' },
+    { label: 'How We Work', icon: Workflow, prompt: 'What is your 4-step development and design process?' },
+    { label: 'Portfolio', icon: FolderGit2, prompt: 'Can you show me your previous projects and portfolio?' },
+    { label: 'Book Call', icon: Calendar, prompt: 'How do I schedule a 15-minute discovery call?' },
+    { label: 'FAQs', icon: HelpCircle, prompt: 'What are your payment terms and warranty after launch?' }
+  ];
+
   // --- Rate Limiting Logic ---
   const MESSAGE_LIMIT = 15; // Max messages per period
   const RESET_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours in ms
@@ -99,44 +112,41 @@ export default function Chatbot() {
     scrollToBottom();
   }, [messages, isOpen]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!input.trim() || isLoading) return;
+  const sendUserMessage = async (textToSend) => {
+    if (!textToSend.trim() || isLoading) return;
 
     const usage = getUsageData();
     if (usage.count >= MESSAGE_LIMIT) {
       setIsRateLimited(true);
-      setMessages(prev => [...prev, { role: 'user', content: input }, { role: 'assistant', content: '⚠️ **Usage Limit Reached** \n\nYou have reached the maximum number of messages for today. To protect our service, we limit the number of chat messages per visitor. \n\nPlease try again tomorrow, or use our **Contact Us** form below!' }]);
+      setMessages(prev => [...prev, { role: 'user', content: textToSend }, { role: 'assistant', content: '**Usage Limit Reached** \n\nYou have reached the maximum number of messages for today. To protect our service, we limit the number of chat messages per visitor. \n\nPlease try again tomorrow, or use our **Contact Us** form below!' }]);
       setInput('');
       return;
     }
 
-    const userMessage = { role: 'user', content: input };
+    const userMessage = { role: 'user', content: textToSend };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
 
     try {
-      // Increment usage count on sending
-      usage.count += 1;
-      localStorage.setItem('aero_chat_usage', JSON.stringify(usage));
-      const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY;
-      
-      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      // Increment Usage Count
+      const currentUsage = getUsageData();
+      localStorage.setItem('aero_chat_usage', JSON.stringify({
+        count: currentUsage.count + 1,
+        resetTime: currentUsage.resetTime
+      }));
+
+      // Call secure backend proxy
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'HTTP-Referer': window.location.href,
-          'X-Title': 'AerialFancy Digital Agency',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          model: 'google/gemini-2.5-flash',
-          max_tokens: 1000,
           messages: [
             { 
               role: 'system', 
-              content: 'You are Aero, the highly professional and formal AI assistant for AerialFancy. AerialFancy is a premier digital agency offering Custom Web Development, Cross-Platform Mobile Apps, and UI/UX Digital Design.\n\nCRITICAL FORMATTING RULE: Always structure your responses professionally. Use markdown, bullet points, and short paragraphs to make information highly readable. Never deliver long, dense paragraphs.\n\nAerialFancy Core Tech Stack (Use this strictly when asked about what technologies or stacks we use, and always present it cleanly as a bulleted list):\n- **Web Development**: React, Next.js, Vite, TailwindCSS, Node.js, Laravel, Java, HTML5, CSS3, JavaScript.\n- **Mobile Development**: Flutter, React Native, iOS, Android.\n- **UI/UX Design**: Figma, Canva, UI/UX, Wireframing, Prototyping.\n- **Infrastructure & Tools**: GitHub, Vercel, Hostinger, Git, CI/CD.\n\nAerialFancy offers the following Service Packages:\n- Atmo (The Launchpad): $1.8k - $3.5k, 2-4 weeks. Best for startups, basic wireframing, 1-5 page responsive website, basic social media setup.\n- Strato (The Professional Suite): $6k - $13.5k, 6-10 weeks. Best for growing businesses. Choice of Full-stack web app OR MVP mobile app, 2-3 social media platforms managed.\n- Exo (The Enterprise Solution): $16.5k - $32k+, 3-6+ months. Best for established companies. Dual-delivery of robust web platform and feature-rich mobile suite (iOS & Android). High-end video production.\n- Nova (The Ongoing Partnership): $3k - $6k / mo retainer. Dedicated off-site CTO and creative marketing department. Continuous tech support, full social media management.\n- Nebula (The Bespoke Build): Custom quote. For highly specialized workflows and custom architecture.\n\nAerialFancy Official Links (You are encouraged to share these if asked. IMPORTANT: Always format URLs as clickable Markdown links, e.g. [LinkedIn](https://www.linkedin.com/company/aerial-fancy-web-solutions)):\n- [LinkedIn](https://www.linkedin.com/company/aerial-fancy-web-solutions)\n- [Instagram](https://instagram.com/aerialfancy)\n- [Facebook](https://www.facebook.com/profile.php?id=61568496947288)\n- [Portfolio/Website](https://aerialfancy.site)\n- Email: info@aerialfancy.site\n\nCRITICAL RULE: You must ONLY answer questions related to AerialFancy, its services, packages, team, or hiring the agency. Do NOT answer general coding questions.\n\nSPECIAL NAVIGATION COMMANDS:\nIf the user asks about specific areas of our website, you can physically scroll their screen to that section by including exactly ONE of the following commands at the VERY END of your message:\n[SCROLL_TO_SERVICES] - use when asking about what services we provide\n[SCROLL_TO_TECH] - use when asking about our tech stack or frameworks\n[SCROLL_TO_WORK] - use when asking about our previous projects, portfolio, or featured work\n[SCROLL_TO_PACKAGES] - use when asking about our pricing, plans, or packages\n[SCROLL_TO_CONTACT] - use when asking to get in touch or contact us\n\nFor example: "We have five packages starting at $1.8k. [SCROLL_TO_PACKAGES]"'
+              content: `You are Aero, the highly professional and formal AI assistant for AerialFancy. AerialFancy is a premier digital agency offering Web and Mobile App Development, Video Editing, UI/UX & Graphics Design, and Social Media Management.\n\nCRITICAL FORMATTING RULE: Always structure your responses professionally. Use markdown, bullet points, and short paragraphs to make information highly readable. Never deliver long, dense paragraphs.\n\nAerialFancy Core Tech Stack (Use this strictly when asked about what technologies or stacks we use, and always present it cleanly as a bulleted list):\n- **Web Development**: React, Next.js, Vite, TailwindCSS, Node.js, Laravel, Java, HTML5, CSS3, JavaScript.\n- **Mobile Development**: Flutter, React Native, iOS, Android.\n- **UI/UX Design**: Figma, Canva, UI/UX, Wireframing, Prototyping.\n- **Infrastructure & Tools**: GitHub, Vercel, Hostinger, Git, CI/CD.\n\nAerialFancy offers the following Service Packages:\n- Atmo (The Launchpad): $1.8k - $3.5k, 2-4 weeks. Best for startups, basic wireframing, 1-5 page responsive website, basic social media setup.\n- Strato (The Professional Suite): $6k - $13.5k, 6-10 weeks. Best for growing businesses. Choice of Full-stack web app OR MVP mobile app, 2-3 social media platforms managed.\n- Exo (The Enterprise Solution): $16.5k - $32k+, 3-6+ months. Best for established companies. Dual-delivery of robust web platform and feature-rich mobile suite (iOS & Android). High-end video production.\n- Nova (The Ongoing Partnership): $3k - $6k / mo retainer. Dedicated off-site CTO and creative marketing department. Continuous tech support, full social media management.\n- Nebula (The Bespoke Build): Custom quote. For highly specialized workflows and custom architecture.\n\nAerialFancy Official Links (You are encouraged to share these if asked. IMPORTANT: Always format URLs as clickable Markdown links, e.g. [LinkedIn](https://www.linkedin.com/company/aerial-fancy-web-solutions)):\n- [Book a 15-Minute Discovery Call](https://cal.com/${import.meta.env.VITE_CALCOM_LINK})\n- [LinkedIn](https://www.linkedin.com/company/aerial-fancy-web-solutions)\n- [Instagram](https://instagram.com/aerialfancy)\n- [Facebook](https://www.facebook.com/profile.php?id=61568496947288)\n- [Portfolio/Website](https://aerialfancy.site)\n- Email: info@aerialfancy.site\n\nCRITICAL RULE: You must ONLY answer questions related to AerialFancy, its services, packages, team, or hiring the agency. Do NOT answer general coding questions.\n\nSPECIAL NAVIGATION COMMANDS:\nIf the user asks about specific areas of our website, you can physically scroll their screen to that section by including exactly ONE of the following commands at the VERY END of your message:\n[SCROLL_TO_SERVICES] - use when asking about what services we provide\n[SCROLL_TO_WHY_US] - use when asking why choose AerialFancy or about our key strengths\n[SCROLL_TO_PROCESS] - use when asking how we work or our workflow steps\n[SCROLL_TO_TECH] - use when asking about our tech stack or frameworks\n[SCROLL_TO_WORK] - use when asking about our previous projects, portfolio, or featured work\n[SCROLL_TO_CALCULATOR] - use when asking to estimate costs or calculate pricing\n[SCROLL_TO_PACKAGES] - use when asking about our pricing, plans, or packages\n[SCROLL_TO_FAQ] - use when asking frequently asked questions\n[SCROLL_TO_CONTACT] - use when asking to get in touch, schedule a call, or contact us\n\nFor example: "We have five packages starting at $1.8k. [SCROLL_TO_PACKAGES]"`
             },
             ...messages,
             userMessage
@@ -152,55 +162,109 @@ export default function Chatbot() {
       // Handle Scroll Commands
       const scrollMatch = botContent.match(/\[SCROLL_TO_([A-Z_]+)\]/);
       if (scrollMatch) {
+        const target = scrollMatch[1];
+        botContent = botContent.replace(/\[SCROLL_TO_[A-Z_]+\]/, '').trim();
+        
         const sectionMap = {
-          'SERVICES': 'services',
-          'TECH': 'tech-stack',
-          'WORK': 'our-work',
-          'PACKAGES': 'packages',
-          'CONTACT': 'contact'
+          SERVICES: 'services',
+          WHY_US: 'why-us',
+          PROCESS: 'process',
+          TECH: 'tech-stack',
+          WORK: 'featured-work',
+          CALCULATOR: 'calculator',
+          PACKAGES: 'packages',
+          FAQ: 'faq',
+          CONTACT: 'contact'
         };
-        const sectionId = sectionMap[scrollMatch[1]];
-        if (sectionId) {
-          setTimeout(() => {
-            document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-          }, 300);
+
+        const targetId = sectionMap[target];
+        if (targetId) {
+          const el = document.getElementById(targetId);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
         }
-        // Remove the command from the visible text
-        botContent = botContent.replace(/\[SCROLL_TO_([A-Z_]+)\]/g, '').trim();
       }
 
-      const botMessage = { role: 'assistant', content: botContent };
-      
-      setMessages(prev => [...prev, botMessage]);
-    } catch (error) {
-      console.error(error);
-      setMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I am having trouble connecting right now. Please try again later!' }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: botContent }]);
+    } catch (err) {
+      console.error('OpenRouter Chat Error:', err);
+      setMessages(prev => [
+        ...prev, 
+        { 
+          role: 'assistant', 
+          content: 'Sorry, I am having trouble connecting to the network right now. Please feel free to email our team directly at info@aerialfancy.site or use our contact form!' 
+        }
+      ]);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    sendUserMessage(input);
+  };
+
   return (
     <>
-      {/* Floating Chat Window */}
+      {/* Floating Action Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="fixed bottom-6 right-6 z-40 p-4 rounded-full bg-gradient-to-r from-primary to-secondary text-white shadow-[0_8px_30px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center group"
+        aria-label="Toggle chat"
+      >
+        <svg 
+          className={`w-6 h-6 transition-transform duration-300 ${isOpen ? 'rotate-90 scale-0' : 'rotate-0 scale-100'}`} 
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+        </svg>
+        <svg 
+          className={`w-6 h-6 absolute transition-transform duration-300 ${isOpen ? 'rotate-0 scale-100' : '-rotate-90 scale-0'}`} 
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+        
+        {/* Unread dot / ping */}
+        {!isOpen && (
+          <span className="absolute top-0 right-0 flex h-3.5 w-3.5 -mt-0.5 -mr-0.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-secondary"></span>
+          </span>
+        )}
+      </button>
+
+      {/* Chat Window Panel */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-80 sm:w-96 h-[500px] max-h-[70vh] flex flex-col glass-panel dark:bg-[#1A2333]/95 rounded-2xl shadow-2xl border border-primary/10 dark:border-white/10 overflow-hidden animate-fade-in-up origin-bottom-right" style={{ animationDuration: '0.3s' }}>
-          
+        <div className="fixed bottom-24 right-6 z-40 w-[92vw] max-w-[400px] h-[580px] max-h-[82vh] rounded-3xl glass-panel border border-primary/10 dark:border-white/10 shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
           {/* Header */}
-          <div className="bg-gradient-to-r from-primary to-secondary p-4 flex justify-between items-center text-white">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
-                <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="p-4 bg-gradient-to-r from-primary to-secondary text-white flex items-center justify-between shadow-sm">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
               <div>
-                <h3 className="font-display font-bold text-sm">Aero AI</h3>
-                <p className="text-xs text-white/80">AerialFancy Assistant</p>
+                <h3 className="font-bold text-sm leading-tight flex items-center gap-1.5">
+                  Aero Assistant
+                  <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                </h3>
+                <p className="text-[11px] text-white/80">AerialFancy AI Consultant</p>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="text-white/80 hover:text-white transition-colors">
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <button 
+              onClick={() => setIsOpen(false)}
+              className="p-1.5 rounded-full hover:bg-white/10 text-white/80 hover:text-white transition-colors"
+              aria-label="Close chat"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -229,6 +293,24 @@ export default function Chatbot() {
             ))}
             {isLoading && <ThinkingProcess />}
             <div ref={messagesEndRef} />
+          </div>
+
+          {/* Quick-Prompt Pills */}
+          <div className="px-3 py-2 bg-white/80 dark:bg-[#1A2333]/90 border-t border-primary/5 dark:border-white/5 overflow-x-auto flex gap-1.5 scrollbar-hide">
+            {quickPrompts.map((item, idx) => {
+              const IconComp = item.icon;
+              return (
+                <button
+                  key={idx}
+                  onClick={() => sendUserMessage(item.prompt)}
+                  disabled={isLoading || isRateLimited}
+                  className="whitespace-nowrap px-2.5 py-1 rounded-full text-[11px] font-medium bg-primary/5 hover:bg-primary/10 dark:bg-white/5 dark:hover:bg-white/15 text-primary dark:text-white/90 border border-primary/10 dark:border-white/10 transition-all hover:scale-[1.02] shrink-0 disabled:opacity-50 inline-flex items-center gap-1.5"
+                >
+                  <IconComp className="w-3 h-3 text-secondary shrink-0" />
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
           </div>
 
           {/* Input Area */}

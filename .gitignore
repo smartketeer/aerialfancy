@@ -27,3 +27,8 @@ test-api.js
 *.njsproj
 *.sln
 *.sw?
+
+# Laravel
+/vendor
+/storage/*.key
+bootstrap/cache/
