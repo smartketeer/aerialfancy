@@ -149,6 +149,7 @@ export default function ContactPage() {
                   <div className="flex justify-center my-6">
                     <HCaptcha
                       sitekey={import.meta.env.VITE_HCAPTCHA_SITE_KEY}
+                      reCaptchaCompat={false}
                       onVerify={(token) => setCaptchaToken(token)}
                       ref={captchaRef}
                     />
