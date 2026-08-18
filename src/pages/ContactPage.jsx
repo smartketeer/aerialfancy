@@ -37,7 +37,7 @@ export default function ContactPage() {
     
     const formData = new FormData(e.target);
     formData.append("access_key", import.meta.env.VITE_WEB3FORMS_ACCESS_KEY);
-    formData.append("h-captcha-response", captchaToken);
+    formData.set("h-captcha-response", captchaToken);
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
