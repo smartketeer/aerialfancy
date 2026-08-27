@@ -12,7 +12,6 @@ export default function ContactPage() {
   
   const [formStatus, setFormStatus] = useState('idle');
   const [captchaToken, setCaptchaToken] = useState(null);
-  const [activeTab, setActiveTab] = useState('message');
   const captchaRef = useRef(null);
 
   // Accordion state for FAQs
@@ -77,27 +76,25 @@ export default function ContactPage() {
         />
 
         <div className="bg-surface/50 dark:bg-white/5 backdrop-blur-xl rounded-[2.5rem] border border-primary/10 dark:border-white/10 shadow-2xl p-4 md:p-8">
-          {/* Tabs */}
-          <div className="flex bg-white/50 dark:bg-black/20 p-1.5 rounded-2xl mb-8 max-w-sm mx-auto">
-            <button 
-              onClick={() => setActiveTab('message')}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${activeTab === 'message' ? 'bg-white dark:bg-[#1A2333] text-primary dark:text-white shadow-sm' : 'text-primary/60 dark:text-white/60 hover:text-primary dark:hover:text-white'}`}
-            >
+          {/* Options */}
+          <div className="flex flex-col sm:flex-row gap-4 bg-white/50 dark:bg-black/20 p-2 rounded-2xl mb-8 max-w-md mx-auto">
+            <div className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all duration-300 bg-white dark:bg-[#1A2333] text-primary dark:text-white shadow-sm">
               <Mail className="w-4 h-4" />
               Send Message
-            </button>
-            <button 
-              onClick={() => setActiveTab('call')}
-              className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${activeTab === 'call' ? 'bg-white dark:bg-[#1A2333] text-primary dark:text-white shadow-sm' : 'text-primary/60 dark:text-white/60 hover:text-primary dark:hover:text-white'}`}
+            </div>
+            <a 
+              href={`https://cal.com/${import.meta.env.VITE_CALCOM_LINK}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all duration-300 text-primary/70 dark:text-white/70 hover:text-primary dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/10"
             >
               <Calendar className="w-4 h-4" />
-              Book a Call
-            </button>
+              Book a Call <ExternalLink className="w-3 h-3 ml-1 opacity-50" />
+            </a>
           </div>
 
           <div className="max-w-3xl mx-auto">
-            {activeTab === 'message' ? (
-              <div className="animate-fade-in">
+            <div className="animate-fade-in">
                 {quoteData && (
                   <div className="mb-8 p-4 rounded-xl bg-secondary/10 border border-secondary/20 flex flex-col items-center text-center">
                     <p className="text-sm text-primary dark:text-white mb-2">You are attaching the following estimate to your inquiry:</p>
@@ -183,15 +180,6 @@ export default function ContactPage() {
                   </p>
                 </form>
               </div>
-            ) : (
-              <div className="animate-fade-in glass-panel rounded-2xl border border-primary/5 dark:border-white/5 overflow-hidden">
-                <Cal 
-                  calLink={import.meta.env.VITE_CALCOM_LINK}
-                  style={{width:"100%",height:"100%",overflow:"scroll"}}
-                  config={{layout: 'month_view'}}
-                />
-              </div>
-            )}
           </div>
         </div>
       </section>

@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="{{ asset('assets/index-D8Ldq9CX.js') }}"></script>
-    <link rel="stylesheet" crossorigin href="{{ asset('assets/index-C7Er4p_m.css') }}">
+    <script type="module" crossorigin src="{{ asset('assets/index-DNSECMCx.js') }}"></script>
+    <link rel="stylesheet" crossorigin href="{{ asset('assets/index-CvXF9JxY.css') }}">
   </head>
   <body>
     <div id="root"></div>
