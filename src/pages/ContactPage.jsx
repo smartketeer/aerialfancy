@@ -91,7 +91,7 @@ export default function ContactPage() {
               className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${activeTab === 'call' ? 'bg-white dark:bg-[#1A2333] text-primary dark:text-white shadow-sm' : 'text-primary/60 dark:text-white/60 hover:text-primary dark:hover:text-white'}`}
             >
               <Calendar className="w-4 h-4" />
-              Book 15-Min Call
+              Book a Call
             </button>
           </div>
 
