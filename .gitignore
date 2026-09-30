@@ -31,6 +31,5 @@ test-api.js
 # Laravel
 /vendor
 /storage/*.key
-/public/build
 bootstrap/cache/*
 !bootstrap/cache/.gitkeep

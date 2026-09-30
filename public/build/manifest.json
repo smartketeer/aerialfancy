@@ -1,0 +1,224 @@
+{
+  "_CTABanner-CK15tCAq.js": {
+    "file": "assets/CTABanner-CK15tCAq.js",
+    "name": "CTABanner",
+    "imports": [
+      "src/main.jsx",
+      "_createLucideIcon-C1Qdq1d6.js"
+    ]
+  },
+  "_GlassCard-C-9GFhWI.js": {
+    "file": "assets/GlassCard-C-9GFhWI.js",
+    "name": "GlassCard",
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "_PageHeader-D9NaTCT6.js": {
+    "file": "assets/PageHeader-D9NaTCT6.js",
+    "name": "PageHeader",
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "_PageSection-BX65Uujx.js": {
+    "file": "assets/PageSection-BX65Uujx.js",
+    "name": "PageSection",
+    "imports": [
+      "src/main.jsx",
+      "_PageHeader-D9NaTCT6.js"
+    ]
+  },
+  "_SEO-Ca4mRiVW.js": {
+    "file": "assets/SEO-Ca4mRiVW.js",
+    "name": "SEO",
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "_calendar-pxfSoEDs.js": {
+    "file": "assets/calendar-pxfSoEDs.js",
+    "name": "calendar",
+    "imports": [
+      "_createLucideIcon-C1Qdq1d6.js"
+    ]
+  },
+  "_circle-check-CnWrBwhr.js": {
+    "file": "assets/circle-check-CnWrBwhr.js",
+    "name": "circle-check",
+    "imports": [
+      "_createLucideIcon-C1Qdq1d6.js"
+    ]
+  },
+  "_constants-2jwzHcRS.js": {
+    "file": "assets/constants-2jwzHcRS.js",
+    "name": "constants",
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "_createLucideIcon-C1Qdq1d6.js": {
+    "file": "assets/createLucideIcon-C1Qdq1d6.js",
+    "name": "createLucideIcon",
+    "imports": [
+      "src/main.jsx"
+    ]
+  },
+  "_rocket-DmDA5c72.js": {
+    "file": "assets/rocket-DmDA5c72.js",
+    "name": "rocket",
+    "imports": [
+      "_createLucideIcon-C1Qdq1d6.js"
+    ]
+  },
+  "_sparkles-B52V2Neu.js": {
+    "file": "assets/sparkles-B52V2Neu.js",
+    "name": "sparkles",
+    "imports": [
+      "_createLucideIcon-C1Qdq1d6.js"
+    ]
+  },
+  "src/Chatbot.jsx": {
+    "file": "assets/Chatbot-BeeEq7m0.js",
+    "name": "Chatbot",
+    "src": "src/Chatbot.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx",
+      "_createLucideIcon-C1Qdq1d6.js",
+      "_calendar-pxfSoEDs.js",
+      "_sparkles-B52V2Neu.js"
+    ]
+  },
+  "src/main.jsx": {
+    "file": "assets/main-DE4UJm04.js",
+    "name": "main",
+    "src": "src/main.jsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "src/Chatbot.jsx",
+      "src/pages/HomePage.jsx",
+      "src/pages/ServicesPage.jsx",
+      "src/pages/PortfolioPage.jsx",
+      "src/pages/PricingPage.jsx",
+      "src/pages/ContactPage.jsx",
+      "src/pages/PrivacyPolicyPage.jsx",
+      "src/pages/TermsOfServicePage.jsx",
+      "src/pages/NotFoundPage.jsx"
+    ],
+    "css": [
+      "assets/main-BRBYrikt.css"
+    ]
+  },
+  "src/pages/ContactPage.jsx": {
+    "file": "assets/ContactPage-CSiWtSmh.js",
+    "name": "ContactPage",
+    "src": "src/pages/ContactPage.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx",
+      "_createLucideIcon-C1Qdq1d6.js",
+      "_calendar-pxfSoEDs.js",
+      "_PageHeader-D9NaTCT6.js",
+      "_SEO-Ca4mRiVW.js",
+      "_constants-2jwzHcRS.js"
+    ]
+  },
+  "src/pages/HomePage.jsx": {
+    "file": "assets/HomePage-Cry651wt.js",
+    "name": "HomePage",
+    "src": "src/pages/HomePage.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx",
+      "_createLucideIcon-C1Qdq1d6.js",
+      "_CTABanner-CK15tCAq.js",
+      "_circle-check-CnWrBwhr.js",
+      "_rocket-DmDA5c72.js",
+      "_sparkles-B52V2Neu.js",
+      "_PageHeader-D9NaTCT6.js",
+      "_SEO-Ca4mRiVW.js",
+      "_GlassCard-C-9GFhWI.js",
+      "_PageSection-BX65Uujx.js"
+    ]
+  },
+  "src/pages/NotFoundPage.jsx": {
+    "file": "assets/NotFoundPage-B7m4vhrq.js",
+    "name": "NotFoundPage",
+    "src": "src/pages/NotFoundPage.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx",
+      "_CTABanner-CK15tCAq.js",
+      "_PageSection-BX65Uujx.js"
+    ]
+  },
+  "src/pages/PortfolioPage.jsx": {
+    "file": "assets/PortfolioPage-BIb5LPEL.js",
+    "name": "PortfolioPage",
+    "src": "src/pages/PortfolioPage.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx",
+      "_createLucideIcon-C1Qdq1d6.js",
+      "_circle-check-CnWrBwhr.js",
+      "_sparkles-B52V2Neu.js",
+      "_PageHeader-D9NaTCT6.js",
+      "_SEO-Ca4mRiVW.js",
+      "_constants-2jwzHcRS.js",
+      "_GlassCard-C-9GFhWI.js",
+      "_PageSection-BX65Uujx.js"
+    ]
+  },
+  "src/pages/PricingPage.jsx": {
+    "file": "assets/PricingPage-DmuMLblB.js",
+    "name": "PricingPage",
+    "src": "src/pages/PricingPage.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx",
+      "_CTABanner-CK15tCAq.js",
+      "_circle-check-CnWrBwhr.js",
+      "_PageHeader-D9NaTCT6.js",
+      "_SEO-Ca4mRiVW.js",
+      "_GlassCard-C-9GFhWI.js",
+      "_PageSection-BX65Uujx.js"
+    ]
+  },
+  "src/pages/PrivacyPolicyPage.jsx": {
+    "file": "assets/PrivacyPolicyPage-UjfAvJn9.js",
+    "name": "PrivacyPolicyPage",
+    "src": "src/pages/PrivacyPolicyPage.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx",
+      "_PageHeader-D9NaTCT6.js"
+    ]
+  },
+  "src/pages/ServicesPage.jsx": {
+    "file": "assets/ServicesPage-CEwzuZjU.js",
+    "name": "ServicesPage",
+    "src": "src/pages/ServicesPage.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx",
+      "_createLucideIcon-C1Qdq1d6.js",
+      "_rocket-DmDA5c72.js",
+      "_PageHeader-D9NaTCT6.js",
+      "_SEO-Ca4mRiVW.js",
+      "_constants-2jwzHcRS.js",
+      "_GlassCard-C-9GFhWI.js",
+      "_PageSection-BX65Uujx.js"
+    ]
+  },
+  "src/pages/TermsOfServicePage.jsx": {
+    "file": "assets/TermsOfServicePage-2WBn4AaL.js",
+    "name": "TermsOfServicePage",
+    "src": "src/pages/TermsOfServicePage.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/main.jsx",
+      "_PageHeader-D9NaTCT6.js"
+    ]
+  }
+}

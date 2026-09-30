@@ -136,14 +136,11 @@ export default function Chatbot() {
         resetTime: currentUsage.resetTime
       }));
 
-      // Call OpenRouter API directly
-      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      // Call secure backend proxy
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
-          'HTTP-Referer': window.location.href,
-          'X-Title': 'AerialFancy Digital Agency Assistant',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           model: 'google/gemini-2.5-flash',
