@@ -159,31 +159,7 @@ export const featuredProjects = [
   }
 ];
 
-export const availableServices = [
-  { id: 'web', name: 'Web App / Website', base: 1800, icon: Globe, desc: 'React, Next.js, responsive layouts' },
-  { id: 'mobile', name: 'Mobile App', base: 2600, icon: Smartphone, desc: 'Flutter / React Native (iOS & Android)' },
-  { id: 'video', name: 'Video Editing', base: 800, icon: Video, desc: 'Promos, social reels & motion graphics' },
-  { id: 'uiux', name: 'UI/UX & Graphics', base: 1100, icon: Palette, desc: 'Figma prototypes, branding & visuals' },
-  { id: 'smm', name: 'Social Media Mgmt', base: 950, icon: Megaphone, desc: 'Content strategy, scheduling & growth' }
-];
 
-export const scopeTiers = {
-  mvp: { label: 'Starter / MVP', mult: 1.0, timeline: '2 – 4 Weeks', desc: 'Core essential features to validate & launch quickly.' },
-  growth: { label: 'Growth / Standard', mult: 1.6, timeline: '5 – 8 Weeks', desc: 'Full-featured build with polished UI and integrations.' },
-  enterprise: { label: 'Enterprise / Scale', mult: 2.5, timeline: '9 – 14+ Weeks', desc: 'Custom enterprise architecture, high complexity & dual delivery.' }
-};
-
-export const speedTiers = {
-  standard: { label: 'Standard Pace', mult: 1.0 },
-  express: { label: 'Express Sprint (+25%)', mult: 1.25 }
-};
-
-export const availableAddons = [
-  { id: 'cms', name: 'CMS & Admin Dashboard', price: 650 },
-  { id: 'ai', name: 'AI Chatbot Integration', price: 500 },
-  { id: 'payment', name: 'Payment & Checkout Gateway', price: 450 },
-  { id: 'seo_perf', name: 'Advanced SEO & Speed Optimization', price: 350 }
-];
 
 export const faqs = [
   {

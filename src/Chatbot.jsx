@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { 
-  Sparkles, Calculator, Workflow, FolderGit2, 
+  Sparkles, Workflow, FolderGit2, 
   Calendar, HelpCircle 
 } from 'lucide-react';
+import { getSystemPrompt } from './data/chatbot-prompt';
 
 const ThinkingProcess = () => {
   const [step, setStep] = useState(0);
@@ -72,7 +73,6 @@ export default function Chatbot() {
 
   const quickPrompts = [
     { label: 'Startup Packages', icon: Sparkles, prompt: 'What package do you recommend for an early-stage startup?' },
-    { label: 'Cost Estimator', icon: Calculator, prompt: 'How do you calculate project costs and estimates?' },
     { label: 'How We Work', icon: Workflow, prompt: 'What is your 4-step development and design process?' },
     { label: 'Portfolio', icon: FolderGit2, prompt: 'Can you show me your previous projects and portfolio?' },
     { label: 'Book Call', icon: Calendar, prompt: 'How do I schedule a 15-minute discovery call?' },
@@ -136,18 +136,20 @@ export default function Chatbot() {
         resetTime: currentUsage.resetTime
       }));
 
-      // Call secure backend proxy
-      const response = await fetch('/api/chat', {
+      // Call OpenRouter API directly
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
+          'HTTP-Referer': window.location.href,
+          'X-Title': 'AerialFancy Digital Agency Assistant',
         },
         body: JSON.stringify({
+          model: 'google/gemini-2.5-flash',
+          max_tokens: 1000,
           messages: [
-            { 
-              role: 'system', 
-              content: `You are Aero, the highly professional and formal AI assistant for AerialFancy. AerialFancy is a premier digital agency offering Web and Mobile App Development, Video Editing, UI/UX & Graphics Design, and Social Media Management.\n\nCRITICAL FORMATTING RULE: Always structure your responses professionally. Use markdown, bullet points, and short paragraphs to make information highly readable. Never deliver long, dense paragraphs.\n\nAerialFancy Core Tech Stack (Use this strictly when asked about what technologies or stacks we use, and always present it cleanly as a bulleted list):\n- **Web Development**: React, Next.js, Vite, TailwindCSS, Node.js, Laravel, Java, HTML5, CSS3, JavaScript.\n- **Mobile Development**: Flutter, React Native, iOS, Android.\n- **UI/UX Design**: Figma, Canva, UI/UX, Wireframing, Prototyping.\n- **Infrastructure & Tools**: GitHub, Vercel, Hostinger, Git, CI/CD.\n\nAerialFancy offers the following Service Packages:\n- Atmo (The Launchpad): $1.8k - $3.5k, 2-4 weeks. Best for startups, basic wireframing, 1-5 page responsive website, basic social media setup.\n- Strato (The Professional Suite): $6k - $13.5k, 6-10 weeks. Best for growing businesses. Choice of Full-stack web app OR MVP mobile app, 2-3 social media platforms managed.\n- Exo (The Enterprise Solution): $16.5k - $32k+, 3-6+ months. Best for established companies. Dual-delivery of robust web platform and feature-rich mobile suite (iOS & Android). High-end video production.\n- Nova (The Ongoing Partnership): $3k - $6k / mo retainer. Dedicated off-site CTO and creative marketing department. Continuous tech support, full social media management.\n- Nebula (The Bespoke Build): Custom quote. For highly specialized workflows and custom architecture.\n\nAerialFancy Official Links (You are encouraged to share these if asked. IMPORTANT: Always format URLs as clickable Markdown links, e.g. [LinkedIn](https://www.linkedin.com/company/aerial-fancy-web-solutions)):\n- [Book a 15-Minute Discovery Call](https://cal.com/${import.meta.env.VITE_CALCOM_LINK})\n- [LinkedIn](https://www.linkedin.com/company/aerial-fancy-web-solutions)\n- [Instagram](https://instagram.com/aerialfancy)\n- [Facebook](https://www.facebook.com/profile.php?id=61568496947288)\n- [Portfolio/Website](https://aerialfancy.site)\n- Email: info@aerialfancy.site\n\nCRITICAL RULE: You must ONLY answer questions related to AerialFancy, its services, packages, team, or hiring the agency. Do NOT answer general coding questions.\n\nSPECIAL NAVIGATION COMMANDS:\nIf the user asks about specific areas of our website, you can physically scroll their screen to that section by including exactly ONE of the following commands at the VERY END of your message:\n[SCROLL_TO_SERVICES] - use when asking about what services we provide\n[SCROLL_TO_WHY_US] - use when asking why choose AerialFancy or about our key strengths\n[SCROLL_TO_PROCESS] - use when asking how we work or our workflow steps\n[SCROLL_TO_TECH] - use when asking about our tech stack or frameworks\n[SCROLL_TO_WORK] - use when asking about our previous projects, portfolio, or featured work\n[SCROLL_TO_CALCULATOR] - use when asking to estimate costs or calculate pricing\n[SCROLL_TO_PACKAGES] - use when asking about our pricing, plans, or packages\n[SCROLL_TO_FAQ] - use when asking frequently asked questions\n[SCROLL_TO_CONTACT] - use when asking to get in touch, schedule a call, or contact us\n\nFor example: "We have five packages starting at $1.8k. [SCROLL_TO_PACKAGES]"`
-            },
+            { role: 'system', content: getSystemPrompt() },
             ...messages,
             userMessage
           ]
@@ -171,7 +173,6 @@ export default function Chatbot() {
           PROCESS: 'process',
           TECH: 'tech-stack',
           WORK: 'featured-work',
-          CALCULATOR: 'calculator',
           PACKAGES: 'packages',
           FAQ: 'faq',
           CONTACT: 'contact'
@@ -188,7 +189,7 @@ export default function Chatbot() {
 
       setMessages(prev => [...prev, { role: 'assistant', content: botContent }]);
     } catch (err) {
-      console.error('OpenRouter Chat Error:', err);
+      console.error('Chatbot API Error:', err);
       setMessages(prev => [
         ...prev, 
         { 

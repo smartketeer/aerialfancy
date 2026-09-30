@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import Chatbot from '../Chatbot';
 import ScrollToTop from './ScrollToTop';
 
+const Chatbot = lazy(() => import('../Chatbot'));
+
 export default function Layout() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem('theme') === 'dark';
+  });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
 
@@ -25,6 +28,7 @@ export default function Layout() {
     } else {
       document.documentElement.classList.remove('dark');
     }
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
 
   return (
@@ -51,11 +55,22 @@ export default function Layout() {
       />
 
       <main className="flex-1 w-full flex flex-col mt-[80px]">
-        <Outlet />
+        <Suspense fallback={
+          <div className="flex-1 flex items-center justify-center min-h-[60vh]">
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-10 h-10 border-4 border-primary/20 dark:border-white/20 border-t-secondary rounded-full animate-spin"></div>
+              <span className="text-sm font-medium text-primary/50 dark:text-white/50">Loading...</span>
+            </div>
+          </div>
+        }>
+          <Outlet />
+        </Suspense>
       </main>
 
       <Footer />
-      <Chatbot />
+      <Suspense fallback={null}>
+        <Chatbot />
+      </Suspense>
     </div>
   );
 }

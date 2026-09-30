@@ -1,5 +1,8 @@
 import React, { useState, useRef } from 'react';
 import PageHeader from '../components/PageHeader';
+import PageSection from '../components/ui/PageSection';
+import GlassCard from '../components/ui/GlassCard';
+import SEO from '../components/ui/SEO';
 import { BookOpen, AlertCircle, Sparkles, CheckCircle2, Trophy } from 'lucide-react';
 import { featuredProjects } from '../data/constants';
 
@@ -23,12 +26,15 @@ export default function PortfolioPage() {
 
   return (
     <>
-      <section className="w-full max-w-6xl mx-auto px-6 py-24 relative z-10">
-        <PageHeader 
-          subtitle="Portfolio"
-          title="Featured Work & Case Studies"
-          description="Explore the digital solutions and tangible results we have engineered for our clients."
-        />
+      <SEO 
+        title="Featured Work & Case Studies" 
+        description="Explore our digital solutions and the tangible results we've engineered for our clients across web, mobile, and design projects."
+      />
+      <PageSection 
+        subtitle="Portfolio"
+        title="Featured Work & Case Studies"
+        description="Explore the digital solutions and tangible results we have engineered for our clients."
+      >
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8 mt-8">
           {/* Filters */}
@@ -67,11 +73,11 @@ export default function PortfolioPage() {
 
         <div ref={carouselRef} className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {filteredProjects.map((project, index) => (
-            <div key={index} className="min-w-[85%] md:min-w-[45%] lg:min-w-[40%] snap-center group rounded-2xl overflow-hidden glass-panel border border-primary/5 dark:border-white/5 shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col">
+            <GlassCard key={index} className="!p-0 !rounded-2xl min-w-[85%] md:min-w-[45%] lg:min-w-[40%] snap-center overflow-hidden duration-500 hover:-translate-y-0">
               <div className="h-64 bg-surface dark:bg-white/5 w-full relative overflow-hidden flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/10 group-hover:scale-105 transition-transform duration-700"></div>
                 {project.image ? (
-                  <img src={project.image} alt={project.title} className="w-full h-full object-cover relative z-10 group-hover:scale-105 transition-transform duration-700" />
+                  <img src={project.image} alt={project.title} loading="lazy" className="w-full h-full object-cover relative z-10 group-hover:scale-105 transition-transform duration-700" />
                 ) : (
                   project.icon
                 )}
@@ -107,10 +113,10 @@ export default function PortfolioPage() {
                   )}
                 </div>
               </div>
-            </div>
+            </GlassCard>
           ))}
         </div>
-      </section>
+      </PageSection>
 
       {/* Case Study Deep-Dive Modal */}
       {selectedCaseStudy && (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
+import SEO from '../components/ui/SEO';
 import { Mail, Calendar, ExternalLink } from 'lucide-react';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import Cal, { getCalApi } from "@calcom/embed-react";
@@ -68,6 +69,10 @@ export default function ContactPage() {
 
   return (
     <>
+      <SEO 
+        title="Contact Us & Book a Call" 
+        description="Ready to build something extraordinary? Drop us a message or schedule a direct discovery call with our engineering leads."
+      />
       <section className="w-full max-w-6xl mx-auto px-6 py-24 relative z-10">
         <PageHeader 
           subtitle="Get in Touch"

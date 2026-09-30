@@ -1,11 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calculator, Rocket, Sparkles, Zap, Handshake, ArrowRight, Globe, Smartphone, Palette, CheckCircle2 } from 'lucide-react';
+import { Calculator, Rocket, Sparkles, Zap, Handshake, ArrowRight, Globe, Smartphone, Palette, CheckCircle2, Code, Database, Award } from 'lucide-react';
 import PageHeader from '../components/PageHeader';
+import GlassCard from '../components/ui/GlassCard';
+import CTABanner from '../components/ui/CTABanner';
+import PageSection from '../components/ui/PageSection';
+import SEO from '../components/ui/SEO';
 
 export default function HomePage() {
   return (
     <>
+      <SEO 
+        title="Custom Web Development & UI/UX" 
+        description="Aerial Fancy is a passionate team of digital engineers and designers crafting high-converting web apps, cross-platform mobile experiences, cinematic video edits, and impactful brand identities."
+      />
       {/* Hero Section */}
       <section className="w-full max-w-6xl mx-auto px-6 pt-36 pb-20 flex flex-col items-center justify-center text-center relative z-10 min-h-[85vh] animate-fade-in-up">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-panel mb-8 shadow-sm border border-primary/10">
@@ -40,7 +48,7 @@ export default function HomePage() {
       <section className="w-full max-w-6xl mx-auto px-6 py-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Service 1 */}
-          <Link to="/services" className="glass-panel p-8 rounded-3xl border border-primary/5 dark:border-white/5 hover:border-secondary/30 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 group flex flex-col items-start bg-gradient-to-b from-transparent to-primary/[0.02] dark:to-white/[0.02]">
+          <GlassCard to="/services" className="items-start bg-gradient-to-b from-transparent to-primary/[0.02] dark:to-white/[0.02]">
             <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-6 text-blue-500 group-hover:scale-110 transition-transform duration-300">
               <Globe className="w-6 h-6" />
             </div>
@@ -49,10 +57,10 @@ export default function HomePage() {
             <span className="inline-flex items-center gap-2 text-sm font-bold text-secondary">
               Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </span>
-          </Link>
+          </GlassCard>
 
           {/* Service 2 */}
-          <Link to="/services" className="glass-panel p-8 rounded-3xl border border-primary/5 dark:border-white/5 hover:border-secondary/30 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 group flex flex-col items-start bg-gradient-to-b from-transparent to-primary/[0.02] dark:to-white/[0.02]">
+          <GlassCard to="/services" className="items-start bg-gradient-to-b from-transparent to-primary/[0.02] dark:to-white/[0.02]">
             <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-6 text-emerald-500 group-hover:scale-110 transition-transform duration-300">
               <Smartphone className="w-6 h-6" />
             </div>
@@ -61,10 +69,10 @@ export default function HomePage() {
             <span className="inline-flex items-center gap-2 text-sm font-bold text-secondary">
               Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </span>
-          </Link>
+          </GlassCard>
 
           {/* Service 3 */}
-          <Link to="/services" className="glass-panel p-8 rounded-3xl border border-primary/5 dark:border-white/5 hover:border-secondary/30 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 group flex flex-col items-start bg-gradient-to-b from-transparent to-primary/[0.02] dark:to-white/[0.02]">
+          <GlassCard to="/services" className="items-start bg-gradient-to-b from-transparent to-primary/[0.02] dark:to-white/[0.02]">
             <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-6 text-purple-500 group-hover:scale-110 transition-transform duration-300">
               <Palette className="w-6 h-6" />
             </div>
@@ -73,21 +81,21 @@ export default function HomePage() {
             <span className="inline-flex items-center gap-2 text-sm font-bold text-secondary">
               Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </span>
-          </Link>
+          </GlassCard>
         </div>
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="w-full max-w-6xl mx-auto px-6 py-24 relative z-10 border-t border-primary/10 dark:border-white/10 mt-12">
-        <PageHeader 
-          subtitle="Our Competitive Edge"
-          title="Why Work With AerialFancy?"
-          description="We combine top-tier technical engineering with bespoke creative design to deliver scalable digital solutions that drive measurable business outcomes."
-        />
+      <PageSection 
+        className="border-t border-primary/10 dark:border-white/10 mt-12"
+        subtitle="Our Competitive Edge"
+        title="Why Work With AerialFancy?"
+        description="We combine top-tier technical engineering with bespoke creative design to deliver scalable digital solutions that drive measurable business outcomes."
+      >
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Reason 1 */}
-          <div className="glass-panel p-8 rounded-3xl border border-primary/5 dark:border-white/5 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col group">
+          <GlassCard>
             <div className="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm">
               <Rocket className="w-6 h-6" />
             </div>
@@ -95,10 +103,10 @@ export default function HomePage() {
             <p className="text-primary/70 dark:text-white/70 text-sm leading-relaxed flex-1">
               We work in high-velocity 1–2 week sprints with live milestone demos, continuous deployment previews, and zero bureaucratic delays.
             </p>
-          </div>
+          </GlassCard>
 
           {/* Reason 2 */}
-          <div className="glass-panel p-8 rounded-3xl border border-primary/5 dark:border-white/5 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col group">
+          <GlassCard>
             <div className="w-12 h-12 rounded-2xl bg-primary/10 dark:bg-white/10 flex items-center justify-center text-primary dark:text-white mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm">
               <Sparkles className="w-6 h-6 text-amber-500 dark:text-amber-400" />
             </div>
@@ -106,10 +114,10 @@ export default function HomePage() {
             <p className="text-primary/70 dark:text-white/70 text-sm leading-relaxed flex-1">
               Every curve, micro-animation, and user journey is meticulously designed to maximize conversion rates and delight your users.
             </p>
-          </div>
+          </GlassCard>
 
           {/* Reason 3 */}
-          <div className="glass-panel p-8 rounded-3xl border border-primary/5 dark:border-white/5 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col group">
+          <GlassCard>
             <div className="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm">
               <Zap className="w-6 h-6 text-cyan-500" />
             </div>
@@ -117,10 +125,10 @@ export default function HomePage() {
             <p className="text-primary/70 dark:text-white/70 text-sm leading-relaxed flex-1">
               Built on React, Next.js, Flutter, and serverless backends designed for enterprise reliability, high SEO scores, and blazing speed.
             </p>
-          </div>
+          </GlassCard>
 
           {/* Reason 4 */}
-          <div className="glass-panel p-8 rounded-3xl border border-primary/5 dark:border-white/5 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 flex flex-col group">
+          <GlassCard>
             <div className="w-12 h-12 rounded-2xl bg-primary/10 dark:bg-white/10 flex items-center justify-center text-primary dark:text-white mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm">
               <Handshake className="w-6 h-6 text-emerald-500" />
             </div>
@@ -128,17 +136,17 @@ export default function HomePage() {
             <p className="text-primary/70 dark:text-white/70 text-sm leading-relaxed flex-1">
               No hidden fees or scope traps. Milestone-based invoicing, crystal clear deliverables, and 100% full IP transfer to your company.
             </p>
-          </div>
+          </GlassCard>
         </div>
-      </section>
+      </PageSection>
 
       {/* Featured Project Spotlight */}
-      <section className="w-full max-w-6xl mx-auto px-6 py-24 relative z-10 border-t border-primary/10 dark:border-white/10">
-        <PageHeader 
-          subtitle="Case Study"
-          title="Featured Spotlight"
-          description="A glimpse into how we solve complex problems with elegant technical solutions."
-        />
+      <PageSection 
+        className="border-t border-primary/10 dark:border-white/10"
+        subtitle="Case Study"
+        title="Featured Spotlight"
+        description="A glimpse into how we solve complex problems with elegant technical solutions."
+      >
 
         <div className="glass-panel rounded-[2.5rem] border border-primary/10 dark:border-white/10 overflow-hidden flex flex-col lg:flex-row items-center shadow-xl hover:shadow-2xl transition-shadow duration-500 mt-12 bg-gradient-to-br from-surface to-primary/5 dark:from-[#1A2333] dark:to-black/20">
           <div className="lg:w-1/2 p-8 md:p-12 flex flex-col items-start justify-center text-left">
@@ -195,32 +203,59 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </PageSection>
+
+      {/* Certifications & Trust Section */}
+      <PageSection 
+        className="border-t border-primary/10 dark:border-white/10"
+        subtitle="Certifications"
+        title="Verified Technical Excellence"
+        description="Our development practices and architectural standards are certified by leading international IT competency benchmarks."
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+          {/* Card 1 */}
+          <GlassCard className="items-start">
+            <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+              <Code className="w-6 h-6" />
+            </div>
+            <h3 className="font-display text-xl font-bold text-primary dark:text-white mb-3">ITS Certified: HTML & CSS</h3>
+            <p className="text-primary/70 dark:text-white/70 text-sm leading-relaxed flex-1">
+              Ensuring pixel-perfect, responsive, and accessible frontend architectures built on standard-compliant code.
+            </p>
+          </GlassCard>
+
+          {/* Card 2 */}
+          <GlassCard className="items-start">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+              <Database className="w-6 h-6" />
+            </div>
+            <h3 className="font-display text-xl font-bold text-primary dark:text-white mb-3">ITS Certified: Database</h3>
+            <p className="text-primary/70 dark:text-white/70 text-sm leading-relaxed flex-1">
+              Architecting secure, high-performing, and scalable backend data structures to protect client data and scale seamlessly.
+            </p>
+          </GlassCard>
+
+          {/* Card 3 */}
+          <GlassCard className="items-start">
+            <div className="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-500 mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+              <Award className="w-6 h-6" />
+            </div>
+            <h3 className="font-display text-xl font-bold text-primary dark:text-white mb-3">TOPCIT Benchmarked</h3>
+            <p className="text-primary/70 dark:text-white/70 text-sm leading-relaxed flex-1">
+              Development practices and software engineering fundamentals aligned with top-tier international IT competency standards.
+            </p>
+          </GlassCard>
+        </div>
+      </PageSection>
 
       {/* Giant CTA Section */}
-      <section className="w-full max-w-6xl mx-auto px-6 py-24 relative z-10">
-        <div className="glass-panel rounded-[3rem] p-12 md:p-20 text-center border border-secondary/30 relative overflow-hidden group shadow-2xl">
-          {/* Animated Gradient Background */}
-          <div className="absolute inset-0 bg-gradient-to-r from-secondary/20 via-purple-500/20 to-primary/20 animate-gradient-x opacity-50 z-0"></div>
-          
-          <div className="relative z-10 max-w-3xl mx-auto">
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold text-primary dark:text-white mb-6 tracking-tight">
-              Ready to transform your <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-purple-500">digital presence?</span>
-            </h2>
-            <p className="text-lg md:text-xl text-primary/80 dark:text-white/80 mb-10">
-              Let's build something amazing together. Book a free discovery call with our engineering leads to discuss your vision, scope, and timeline.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to="/contact" className="w-full sm:w-auto px-10 py-5 rounded-full bg-gradient-to-r from-primary to-secondary text-white font-bold text-lg shadow-[0_8px_25px_rgba(146,154,171,0.5)] dark:shadow-[0_8px_25px_rgba(0,0,0,0.6)] hover:shadow-[0_12px_35px_rgba(146,154,171,0.7)] dark:hover:shadow-[0_12px_35px_rgba(0,0,0,0.8)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
-                Start a Project <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link to="/pricing" className="w-full sm:w-auto px-10 py-5 rounded-full bg-white dark:bg-black/40 text-primary dark:text-white font-bold text-lg border border-primary/10 dark:border-white/10 hover:bg-surface dark:hover:bg-black/60 shadow-sm hover:shadow-md transition-all duration-300">
-                View Pricing
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageSection>
+        <CTABanner 
+          title="Ready to transform your"
+          highlightText="digital presence?"
+          description="Let's build something amazing together. Book a free discovery call with our engineering leads to discuss your vision, scope, and timeline."
+        />
+      </PageSection>
     </>
   );
 }

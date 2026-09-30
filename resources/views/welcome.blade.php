@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="{{ asset('assets/index-DnAGSFF4.js') }}"></script>
-    <link rel="stylesheet" crossorigin href="{{ asset('assets/index-Ct6epl8L.css') }}">
+    @viteReactRefresh
+    @vite(['src/main.jsx'])
   </head>
   <body>
     <div id="root"></div>
